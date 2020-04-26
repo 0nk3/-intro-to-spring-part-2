@@ -1,10 +1,7 @@
 package com.onke.spring.springboot;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import com.onke.spring.springboot.model.User;
 import com.onke.spring.springboot.service.UserService;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +10,14 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Logger;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-//@EnableAutoConfiguration
+
 @SpringBootTest(classes = SpringbootApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 
 class UserServiceImplTest {
@@ -76,9 +73,8 @@ class UserServiceImplTest {
     private URL address;
     @BeforeEach
     public void createLink() throws Exception {
-        this.address = new URL("http://localhost:" + localServerPort);
+        this.address = new URL("http://127.0.0.1:" + localServerPort);
     }
-
     @Test
     void testSecurity(){
         ResponseEntity<String> responseEntity = restTemplate.withBasicAuth("onke", "password").getForEntity(address.toString(), String.class);

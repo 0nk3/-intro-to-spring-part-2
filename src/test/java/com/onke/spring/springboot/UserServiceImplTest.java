@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -19,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @SpringBootTest(classes = SpringbootApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-
+@EnableCaching
 class UserServiceImplTest {
     private static final Logger LOGGER = Logger.getLogger(UserServiceImplTest.class.getName());
     @LocalServerPort
@@ -49,8 +51,9 @@ class UserServiceImplTest {
     void remove() {
         //no return type
     }
+    @Cacheable("name")
     @Test
-    void getUser() {
+    public void getUser() {
         User user =  new User();
         user.setName(name);
         user.setSurname(surname);
@@ -65,7 +68,6 @@ class UserServiceImplTest {
         user.setSurname(surname);
         user.setId(1);
         for (int i = 1; i <= 4; i++){
-            LOGGER.info(String.format("\t\t\t\tcall number  : %d", i));  //keeping track of call counts
             assertEquals(user.getId(), userService.getUser(1));  // same user id ==> same user
         }
     }

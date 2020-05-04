@@ -51,7 +51,6 @@ class UserServiceImplTest {
     void remove() {
         //no return type
     }
-    @Cacheable("name")
     @Test
     public void getUser() {
         User user =  new User();
@@ -61,8 +60,9 @@ class UserServiceImplTest {
         assertEquals(user.getId(), userService.getUser(1));  // same user id ==> same user
     }
     // test for the caching section
+    @Cacheable("name")
     @Test
-    void getUserFourTimes(){
+    public void getUserFourTimes(){
         User user = new User();
         user.setName(name);
         user.setSurname(surname);
